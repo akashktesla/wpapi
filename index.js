@@ -1,3 +1,4 @@
+const prompt = require('prompt-sync')();
 const puppeteer = require("puppeteer");
 var robot = require("robotjs");
 
@@ -9,7 +10,7 @@ function wait(sec) {
   } while (currentDate - date < sec*1000);
 }
 
-async function scrape(url) {
+async function scrape(url,usr,msg) {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     const navigationPromise = page.waitForNavigation({waitUntil: "domcontentloaded"});
@@ -21,11 +22,11 @@ async function scrape(url) {
     console.log('valzkai aeeee')
     const target = await page.$("._16C8p");
     await target.click();
-    await target.type("jason");
+    await target.type(usr);
     console.log("waiting is over vro2")
-  await page.waitForSelector('div._3OvU8 > div._3vPI2 > div.zoWT4 > span[title="jason"]')
+  await page.waitForSelector('div._3OvU8 > div._3vPI2 > div.zoWT4 > span[title="'+usr+'"]')
     console.log('valzkai aeeee')
-    const target2 = await page.$('div._3OvU8 > div._3vPI2 > div.zoWT4 > span[title="jason"]');
+    const target2 = await page.$('div._3OvU8 > div._3vPI2 > div.zoWT4 > span[title="'+usr+'"]');
     console.log(target2.innerHTML)
     console.log(target2)
     await target2.click();
@@ -33,10 +34,12 @@ async function scrape(url) {
     await page.waitForSelector('footer > div._2BU3P.tm2tP.copyable-area > div._1SEwr > span > div._6h3Ps > div._2lMWa > div.p3_M1 > div.g0rxnol2')
     const inp = await page.$("footer > div._2BU3P.tm2tP.copyable-area > div._1SEwr > span > div._6h3Ps > div._2lMWa > div.p3_M1 > div.g0rxnol2");
     console.log(inp)
-    for (let i = 0; i < 100; i++) {
-      await inp.type("hellow jasu kutti from wp api");
+    for (let i = 0; i < 1000; i++) {
+      await inp.type(msg);
       await page.keyboard.press("Enter");
     }
     }
 
-scrape("https://web.whatsapp.com");
+
+  
+  scrape("https://web.whatsapp.com","viggy","your ordered 1000msgs");
